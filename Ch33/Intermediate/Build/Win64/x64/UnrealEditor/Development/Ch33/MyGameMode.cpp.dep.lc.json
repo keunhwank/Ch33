@@ -1,0 +1,21 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\ue5\\git\\ch33\\ch33\\source\\ch33\\private\\mygamemode.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\ue5\\git\\ch33\\ch33\\intermediate\\build\\win64\\x64\\ch33editor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\ue5\\git\\ch33\\ch33\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ch33\\definitions.ch33.h",
+            "c:\\ue5\\git\\ch33\\ch33\\source\\ch33\\public\\mygamemode.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemode.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemode.generated.h",
+            "c:\\ue5\\git\\ch33\\ch33\\intermediate\\build\\win64\\unrealeditor\\inc\\ch33\\uht\\mygamemode.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

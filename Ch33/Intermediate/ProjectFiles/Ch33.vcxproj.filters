@@ -11,6 +11,7 @@
     <None Include="..\..\Source\Ch33Editor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -37,6 +38,30 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Ch33\Ch33.h">
       <Filter>Source\Ch33</Filter>
+    </ClCompile>
+    <Filter Include="Source\Ch33\Private">
+      <UniqueIdentifier>{4106CE87-E0F5-34A6-A9C5-6718194F8584}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Ch33\Private\MyCharacter.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\MyGameMode.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\MyPlayerController.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\Ch33\Public">
+      <UniqueIdentifier>{A1543A20-F4B9-39A5-9034-084ECD131FC8}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\Ch33\Public\MyCharacter.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\MyGameMode.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\MyPlayerController.h">
+      <Filter>Source\Ch33\Public</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
