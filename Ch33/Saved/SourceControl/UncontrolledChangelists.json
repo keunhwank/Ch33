@@ -13,7 +13,8 @@
 				"C:/UE5/Git/Ch33/Ch33/Content/Inputs/IA_Move.uasset",
 				"C:/UE5/Git/Ch33/Ch33/Content/Inputs/IA_Sprint.uasset",
 				"C:/UE5/Git/Ch33/Ch33/Content/Inputs/IMC_Character.uasset",
-				"C:/UE5/Git/Ch33/Ch33/Content/Blueprints/BP_MyPlayerController.uasset"
+				"C:/UE5/Git/Ch33/Ch33/Content/Blueprints/BP_MyPlayerController.uasset",
+				"C:/UE5/Git/Ch33/Ch33/Content/Blueprints/ABP_My.uasset"
 			]
 		}
 	]
