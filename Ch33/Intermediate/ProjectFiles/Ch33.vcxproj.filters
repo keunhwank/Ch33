@@ -42,6 +42,24 @@
     <Filter Include="Source\Ch33\Private">
       <UniqueIdentifier>{4106CE87-E0F5-34A6-A9C5-6718194F8584}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Ch33\Private\BaseItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\BigCoinItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\CoinItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\HealingItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\ItemInterface.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\MineItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Ch33\Private\MyCharacter.cpp">
       <Filter>Source\Ch33\Private</Filter>
     </ClCompile>
@@ -51,9 +69,30 @@
     <ClCompile Include="..\..\Source\Ch33\Private\MyPlayerController.cpp">
       <Filter>Source\Ch33\Private</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Private\SmallCoinItem.cpp">
+      <Filter>Source\Ch33\Private</Filter>
+    </ClCompile>
     <Filter Include="Source\Ch33\Public">
       <UniqueIdentifier>{A1543A20-F4B9-39A5-9034-084ECD131FC8}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Ch33\Public\BaseItem.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\BigCoinItem.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\CoinItem.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\HealingItem.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\ItemInterface.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\MineItem.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Ch33\Public\MyCharacter.h">
       <Filter>Source\Ch33\Public</Filter>
     </ClCompile>
@@ -61,6 +100,9 @@
       <Filter>Source\Ch33\Public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Ch33\Public\MyPlayerController.h">
+      <Filter>Source\Ch33\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Ch33\Public\SmallCoinItem.h">
       <Filter>Source\Ch33\Public</Filter>
     </ClCompile>
   </ItemGroup>
