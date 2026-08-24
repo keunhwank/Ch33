@@ -13,8 +13,53 @@ ASpawnVolume::ASpawnVolume()
 
 	SpawningBox = CreateDefaultSubobject<UBoxComponent>(TEXT("SpawningBox"));
 	SpawningBox->SetupAttachment(Scene);
+
+	ItemDataTable = nullptr;
 }
 
+void ASpawnVolume::SpawnRandomItem()
+{
+	if (FItemSpawnRow* SelectedRow = GetRandomItem())
+	{
+		if (UClass* ActualClass = SelectedRow->ItemClass.Get())
+		{
+			SpawnItem(ActualClass);
+		}
+	}
+}
+
+FItemSpawnRow* ASpawnVolume::GetRandomItem() const
+{
+	if (!ItemDataTable) return nullptr;
+
+	TArray<FItemSpawnRow*> AllRows;
+	static const FString ContextString(TEXT("ItemSpawnConText"));
+	ItemDataTable->GetAllRows(ContextString, AllRows);
+
+	if (AllRows.IsEmpty()) return nullptr;
+
+	float TotalChance = 0.0f;
+	for (const FItemSpawnRow* Row : AllRows)
+	{
+		if (Row)
+		{
+			TotalChance += Row->SpwanChance;
+		}
+	}
+	const float RandValue = FMath::FRandRange(0.0f, TotalChance);
+
+	float AccumulateChance = 0.0f;
+
+	for (FItemSpawnRow* Row : AllRows)
+	{
+		AccumulateChance += Row->SpwanChance;
+		if (RandValue <= AccumulateChance)
+		{
+			return Row;
+		}
+	}
+	return nullptr;
+}
 
 FVector ASpawnVolume::GetRandomPointInVolume() const
 {
