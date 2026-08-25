@@ -23,9 +23,9 @@ public:
 	UDataTable* ItemDataTable;
 
 	UFUNCTION(BlueprintCallable, Category = "Spawning")
-	void SpawnRandomItem();
+	AActor* SpawnRandomItem();
 
 	FItemSpawnRow* GetRandomItem() const;
-	void SpawnItem(TSubclassOf<AActor> ItemClass);
+	AActor* SpawnItem(TSubclassOf<AActor> ItemClass);
 	FVector GetRandomPointInVolume() const;
 };
