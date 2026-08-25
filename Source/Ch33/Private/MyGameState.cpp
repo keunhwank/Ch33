@@ -1,8 +1,11 @@
 #include "MyGameState.h"
 #include "MyGameInstance.h"
+#include "MyPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "SpawnVolume.h"
 #include "CoinItem.h"
+#include "Components/TextBlock.h"
+#include "Blueprint/UserWidget.h"
 
 
 AMyGameState::AMyGameState()
@@ -137,5 +140,41 @@ void AMyGameState::EndLevel()
 
 void AMyGameState::OnGameOver()
 {
+  UpdateHUD();
   UE_LOG(LogTemp, Warning, TEXT("Game Over!!"));
+}
+
+void AMyGameState::UpdateHUD()
+{
+  if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+  {
+    if (AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(PlayerController))
+    {
+      if (UUserWidget* HUDWidget = MyPlayerController->GetHUDWidget())
+      {
+        if (UTextBlock* TimeText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("Time"))))
+        {
+          float RemainingTime = GetWorldTimerManager().GetTimerRemaining(LevelTimerHandle);
+          TimeText->SetText(FText::FromString(FString::Printf(TEXT("Time: % .1f"), RemainingTime)));
+        }
+
+        if (UTextBlock* ScoreText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("Score"))))
+        {
+          if (UGameInstance* GameInstance = GetGameInstance())
+          {
+            UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GameInstance);
+            if (MyGameInstance)
+            {
+              ScoreText->SetText(FText::FromString(FString::Printf(TEXT("Score: %d"), MyGameInstance->TotalScore)));
+            }
+          }
+        }
+
+        if (UTextBlock* LevelIndexText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("Level"))))
+        {
+          LevelIndexText->SetText(FText::FromString(FString::Printf(TEXT("Level: %d"), CurrentLevelIndex + 1)));
+        }
+      }
+    }
+  }
 }

@@ -42,4 +42,5 @@ public:
 	void OnLevelTimeUp();
 	void OnCoinCollected();
 	void EndLevel();
+	void UpdateHUD();
 };
