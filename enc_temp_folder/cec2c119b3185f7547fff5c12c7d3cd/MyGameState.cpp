@@ -107,19 +107,20 @@ void AMyGameState::OnCoinCollected()
 void AMyGameState::EndLevel()
 {
   GetWorldTimerManager().ClearTimer(LevelTimerHandle);
- 
+  CurrentLevelIndex++;                          // º¸·ù
+
   if (UGameInstance* GameInstance = GetGameInstance())
   {
     UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GameInstance);
     if (MyGameInstance)
     {
       AddScore(Score);
-      CurrentLevelIndex++;
+      CollectedCoinCount++;
       MyGameInstance->CurrentLevelIndex = CurrentLevelIndex;
     }
   }
 
-  if (CurrentLevelIndex >= MaxLevels - 1)
+  if (CurrentLevelIndex >= MaxLevels -1)
   {
     OnGameOver();
     return;
