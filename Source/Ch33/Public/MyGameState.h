@@ -30,6 +30,7 @@ public:
 	TArray<FName>LevelMapNames;
 
 	FTimerHandle LevelTimerHandle;
+	FTimerHandle HUDUpdateTimerHandle;
 
 	UFUNCTION(BlueprintPure, Category = "Score")
 	int32 GetScore() const;
