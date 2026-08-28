@@ -13,9 +13,12 @@ AMyGameState::AMyGameState()
   Score = 0;
   SpawnedCoinCount = 0;
   CollectedCoinCount = 0;
-  LevelDuration = 30.0f;
+  LevelDurations = { 30.0f, 30.0f, 30.0f };
   CurrentLevelIndex = 0;
   MaxLevels = 3;
+  WaveGoalCoin = { 10, 15, 50 };
+  WaveSpawnCount = { 40, 60, 100 };
+  WaveDurations = { 10.0f, 15.0f, 20.0f };
 }
 
 void AMyGameState::BeginPlay()
@@ -52,60 +55,52 @@ void AMyGameState::AddScore(int32 Amount)
 
 void AMyGameState::StartLevel()
 {
-  if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+  // HUD 보여주기
+  if (APlayerController* PlayerController =
+    GetWorld()->GetFirstPlayerController())
   {
-    if (AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(PlayerController))
+    if (AMyPlayerController* MyPlayerController =
+      Cast<AMyPlayerController>(PlayerController))
     {
       MyPlayerController->ShowGameHUD();
     }
   }
 
+  // 저장된 Level Index 불러오기
   if (UGameInstance* GameInstance = GetGameInstance())
   {
     UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GameInstance);
+
     if (MyGameInstance)
     {
-      CurrentLevelIndex = MyGameInstance->CurrentLevelIndex;
+      CurrentLevelIndex =
+        MyGameInstance->CurrentLevelIndex;
     }
   }
 
-  SpawnedCoinCount = 0;
-  CollectedCoinCount = 0;
+  CurrentWaveIndex = 0;
 
-  TArray<AActor*> FoundVolumes;
-  UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnVolume::StaticClass(), FoundVolumes);
-
-  const int32 ItemToSpawn = 40;
-
-  for (int32 i = 0; i < ItemToSpawn; i++)
-  {
-    if (FoundVolumes.Num() > 0)
-    {
-      ASpawnVolume* SpawnVolume = Cast<ASpawnVolume>(FoundVolumes[0]);
-      if (SpawnVolume)
-      {
-        AActor* SpawnedActor = SpawnVolume->SpawnRandomItem();
-        if (SpawnedActor && SpawnedActor->IsA(ACoinItem::StaticClass()))
-        {
-          SpawnedCoinCount++;
-        }
-      }
-    }
-  }
+  StartWave();
 
   UpdateHUD();
-
-  GetWorldTimerManager().SetTimer(
-    LevelTimerHandle,
-    this,
-    &AMyGameState::OnLevelTimeUp,
-    LevelDuration,
-    false
+  if (LevelDurations.IsValidIndex(CurrentLevelIndex))
+  {
+    const float CurrentLevelDurations =
+      LevelDurations[CurrentLevelIndex];
+    GetWorldTimerManager().SetTimer(
+      LevelTimerHandle,
+      this,
+      &AMyGameState::OnLevelTimeUp,
+      CurrentLevelDurations,
+      false
+    );
+  }
+  UE_LOG(
+    LogTemp,
+    Warning,
+    TEXT("Level %d Start!"),
+    CurrentLevelIndex + 1
   );
-
-  UE_LOG(LogTemp, Warning, TEXT("Level %d Start!, Spawned %d Coin"),
-    CurrentLevelIndex + 1,
-    SpawnedCoinCount);
 }
 
 void AMyGameState::OnLevelTimeUp()
@@ -120,10 +115,11 @@ void AMyGameState::OnCoinCollected()
     CollectedCoinCount,
     SpawnedCoinCount)
 
-  if(SpawnedCoinCount > 0 && CollectedCoinCount >= SpawnedCoinCount)
-  {
-    EndLevel();
-  }
+
+    if (WaveGoalCoin.IsValidIndex(CurrentWaveIndex) && CollectedCoinCount >= WaveGoalCoin[CurrentWaveIndex])
+    {
+      EndWave();
+    }
 }
 
 void AMyGameState::EndLevel()
@@ -202,4 +198,74 @@ void AMyGameState::UpdateHUD()
       }
     }
   }
+}
+
+void AMyGameState::StartWave()
+{
+  UE_LOG(LogTemp, Warning, TEXT("Wave %d Start"), CurrentWaveIndex + 1);
+
+  SpawnedCoinCount = 0;
+  CollectedCoinCount = 0;
+
+  TArray<AActor*> FoundVolumes;
+  UGameplayStatics::GetAllActorsOfClass(
+    GetWorld(),
+    ASpawnVolume::StaticClass(),
+    FoundVolumes
+  );
+  if (WaveSpawnCount.IsValidIndex(CurrentWaveIndex))
+  {
+
+    const int32 ItemToSpawn = WaveSpawnCount[CurrentWaveIndex];
+
+    for (int32 i = 0; i < ItemToSpawn; i++)
+    {
+      if (FoundVolumes.Num() > 0)
+      {
+        ASpawnVolume* SpawnVolume =
+          Cast<ASpawnVolume>(FoundVolumes[0]);
+
+        if (SpawnVolume)
+        {
+          AActor* SpawnedActor =
+            SpawnVolume->SpawnRandomItem();
+
+          if (SpawnedActor &&
+            SpawnedActor->IsA(ACoinItem::StaticClass()))
+          {
+            SpawnedCoinCount++;
+          }
+        }
+      }
+    }
+  }
+}
+
+void AMyGameState::EndWave()
+{
+  if (WaveDurations.IsValidIndex(CurrentWaveIndex))
+  {
+    float RemainingTime = GetWorldTimerManager().GetTimerRemaining(LevelTimerHandle);
+
+    RemainingTime += WaveDurations[CurrentWaveIndex];
+    GetWorldTimerManager().SetTimer(
+      LevelTimerHandle,
+      this,
+      &AMyGameState::OnLevelTimeUp,
+      RemainingTime,
+      false
+    );
+  }
+
+  CurrentWaveIndex++;
+
+  if (WaveGoalCoin.IsValidIndex(CurrentWaveIndex))
+  {
+    StartWave();
+  }
+  else
+  {
+    EndLevel();
+  }
+  
 }
