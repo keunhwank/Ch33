@@ -5,7 +5,6 @@
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/TextBlock.h"
-#include "Components/Button.h"
 
 AMyPlayerController::AMyPlayerController()
   :InputMappingContext(nullptr),
@@ -77,11 +76,11 @@ void AMyPlayerController::ShowMainMenu(bool bIsRestart)
     {
       if (bIsRestart)
       {
-        ButtonText->SetText(FText::FromString(TEXT("Game Restart")));
+        ButtonText->SetText(FText::FromString(TEXT("Restart")));
       }
       else
       {
-        ButtonText->SetText(FText::FromString(TEXT("Game Start")));
+        ButtonText->SetText(FText::FromString(TEXT("Start")));
       }
     }
     if (bIsRestart)
@@ -89,11 +88,7 @@ void AMyPlayerController::ShowMainMenu(bool bIsRestart)
       UFunction* PlayAnimFunc = MainMenuWidgetInstance->FindFunction(FName("PlayGameOverAnim"));
       if (PlayAnimFunc)
       {
-        if (UTextBlock* GameText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("GameText"))))
-        {
-          MainMenuWidgetInstance->ProcessEvent(PlayAnimFunc, nullptr);
-          GameText->SetText(FText::FromString(TEXT("Game Over")));
-        }
+        MainMenuWidgetInstance->ProcessEvent(PlayAnimFunc, nullptr);
       }
 
       if (UTextBlock* TotalScoreText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName("TotalScoreText")))
@@ -104,16 +99,6 @@ void AMyPlayerController::ShowMainMenu(bool bIsRestart)
             FString::Printf(TEXT("Total Score: %d"), MyGameInstance->TotalScore)
           ));
         }
-      }
-    }
-    if (UTextBlock* ButtonText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName("ExitButtonText")))
-    {
-      if (UButton* ExitButton = Cast<UButton>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("ExitButton"))))
-      {
-        ExitButton->OnClicked.AddDynamic(
-          this,
-          &AMyPlayerController::ExitGame
-        );
       }
     }
   }
@@ -162,14 +147,4 @@ void AMyPlayerController::StartGame()
 
   UGameplayStatics::OpenLevel(GetWorld(), FName("BasicLevel"));
   SetPause(false);
-}
-
-void AMyPlayerController::ExitGame()
-{
-  UKismetSystemLibrary::QuitGame(
-    GetWorld(),
-    this,
-    EQuitPreference::Quit,
-    false
-  );
 }

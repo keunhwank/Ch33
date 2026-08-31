@@ -13,7 +13,7 @@ AMyGameState::AMyGameState()
   Score = 0;
   SpawnedCoinCount = 0;
   CollectedCoinCount = 0;
-  LevelDurations = { 10.0f, 10.0f, 10.0f }; // { 30.0f, 30.0f, 30.0f };
+  LevelDurations = { 30.0f, 30.0f, 30.0f };
   CurrentLevelIndex = 0;
   MaxLevels = 3;
   WaveGoalCoin = { 10, 10, 90 };
