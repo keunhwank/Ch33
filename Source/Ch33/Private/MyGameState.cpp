@@ -16,9 +16,9 @@ AMyGameState::AMyGameState()
   LevelDurations = { 30.0f, 30.0f, 30.0f };
   CurrentLevelIndex = 0;
   MaxLevels = 3;
-  WaveGoalCoin = { 10, 15, 50 };
-  WaveSpawnCount = { 40, 60, 100 };
-  WaveDurations = { 10.0f, 15.0f, 20.0f };
+  WaveGoalCoin = { 10, 10, 90 };
+  WaveSpawnCount = { 100, 200, 400 };
+  WaveDurations = { 15.0f, 20.0f, 25.0f };
 }
 
 void AMyGameState::BeginPlay()
