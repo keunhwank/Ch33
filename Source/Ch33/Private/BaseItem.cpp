@@ -5,7 +5,9 @@
 
 ABaseItem::ABaseItem()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
+
+	RotationSpeed = 100.0f;
 
 	Scene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
 	SetRootComponent(Scene);
@@ -98,5 +100,16 @@ void ABaseItem::DestroyItem()
 {
 	Destroy();
 }
+
+void ABaseItem::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (!FMath::IsNearlyZero(RotationSpeed))
+	{
+		AddActorLocalRotation(FRotator(0.0f, RotationSpeed * DeltaTime, 0.0f));
+	}
+}
+
+
 
 

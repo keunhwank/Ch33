@@ -17,10 +17,17 @@ class CH33_API ABaseItem : public AActor, public IItemInterface
 public:	
 	ABaseItem();
 
+	//virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "RotationSpeed");
+	float RotationSpeed;
+
 protected:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
 	FName ItemType;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item|Component")
 	USceneComponent* Scene;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item|Component")
@@ -50,4 +57,5 @@ protected:
 	virtual FName GetItemType() const override;
 
 	virtual void DestroyItem();
+
 };

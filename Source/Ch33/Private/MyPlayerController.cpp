@@ -173,3 +173,19 @@ void AMyPlayerController::ExitGame()
     false
   );
 }
+
+void AMyPlayerController::ShowGameClear()
+{
+  if (MainMenuWidgetInstance)
+  {
+    UFunction* PlayAnimFunc = MainMenuWidgetInstance->FindFunction(FName("PlayGameOverAnim"));
+    if (PlayAnimFunc)
+    {
+      if (UTextBlock* GameText = Cast<UTextBlock>(MainMenuWidgetInstance->GetWidgetFromName(TEXT("GameText"))))
+      {
+        MainMenuWidgetInstance->ProcessEvent(PlayAnimFunc, nullptr);
+        GameText->SetText(FText::FromString(TEXT("Game Clear!!")));
+      }
+    }
+  }
+}

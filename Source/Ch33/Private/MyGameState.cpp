@@ -11,13 +11,14 @@
 AMyGameState::AMyGameState()
 {
   Score = 0;
+  ClearScore = 10000;
   SpawnedCoinCount = 0;
   CollectedCoinCount = 0;
-  LevelDurations = { 10.0f, 10.0f, 10.0f }; // { 30.0f, 30.0f, 30.0f };
+  LevelDurations = { 40.0f, 35.0f, 30.0f }; // { 30.0f, 30.0f, 30.0f }; // { 5.0f, 5.0f, 5.0f };
   CurrentLevelIndex = 0;
   MaxLevels = 3;
-  WaveGoalCoin = { 10, 10, 90 };
-  WaveSpawnCount = { 100, 200, 400 };
+  WaveGoalCoin = { 5, 5, 99 };
+  WaveSpawnCount = { 40, 45, 50 };
   WaveDurations = { 15.0f, 20.0f, 25.0f };
 }
 
@@ -139,8 +140,21 @@ void AMyGameState::EndLevel()
 
   if (CurrentLevelIndex >= MaxLevels)
   {
-    OnGameOver();
-    return;
+    if (UMyGameInstance* MyGameInstance = Cast<UMyGameInstance>(GetGameInstance()))
+    {
+      if (MyGameInstance->TotalScore >= ClearScore)
+      {
+        UE_LOG(LogTemp, Warning, TEXT("Clear"));
+        OnGameClear();
+        return;
+      }
+      else
+      {
+        UE_LOG(LogTemp, Warning, TEXT("Over"));
+        OnGameOver();
+        return;
+      }
+    }
   }
 
   if (LevelMapNames.IsValidIndex(CurrentLevelIndex))
@@ -164,6 +178,20 @@ void AMyGameState::OnGameOver()
     }
   }
 }
+
+void AMyGameState::OnGameClear()
+{
+  if (APlayerController* PlayerController = GetWorld()->GetFirstPlayerController())
+  {
+    if (AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(PlayerController))
+    {
+      MyPlayerController->SetPause(true);
+      MyPlayerController->ShowMainMenu(true);
+      MyPlayerController->ShowGameClear();
+    }
+  }
+}
+
 
 void AMyGameState::UpdateHUD()
 {
@@ -221,14 +249,15 @@ void AMyGameState::StartWave()
   if (WaveSpawnCount.IsValidIndex(CurrentWaveIndex))
   {
 
-    const int32 ItemToSpawn = WaveSpawnCount[CurrentWaveIndex];
+    const int32 ItemToSpawn =
+      WaveSpawnCount[CurrentWaveIndex] * (CurrentLevelIndex + 1);
 
     for (int32 i = 0; i < ItemToSpawn; i++)
     {
       if (FoundVolumes.Num() > 0)
       {
         ASpawnVolume* SpawnVolume =
-          Cast<ASpawnVolume>(FoundVolumes[0]);
+          Cast<ASpawnVolume>(FoundVolumes[i % FoundVolumes.Num()]);
 
         if (SpawnVolume)
         {

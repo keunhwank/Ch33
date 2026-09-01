@@ -47,6 +47,9 @@ public:
 	void StartGame();
 	UFUNCTION()
 	void ExitGame();
+	UFUNCTION()
+	void ShowGameClear();
+
 
 	virtual void BeginPlay();
 };

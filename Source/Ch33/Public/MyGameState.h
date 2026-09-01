@@ -16,6 +16,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Coin")
 	int32 Score;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Coin")
+	int32 ClearScore;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Coin")
 	int32 SpawnedCoinCount;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Coin")
@@ -45,10 +47,13 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Score")
 	int32 GetScore() const;
+
 	UFUNCTION(BlueprintCallable, Category = "Score")
 	void AddScore(int32 Amount);
 	UFUNCTION(BlueprintCallable, Category = "Level")
 	void OnGameOver();
+	UFUNCTION(BlueprintCallable, Category = "Level")
+	void OnGameClear();
 
 	void StartLevel();
 	void OnLevelTimeUp();
